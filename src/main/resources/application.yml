@@ -1,0 +1,46 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/phtoto_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+logging:
+  level:
+    com.zhiend.netflix: info
+  pattern:
+    dateformat: HH:mm:ss
+
+mybatis-plus:
+  type-aliases-package: com.zhiend.photo.entity
+  mapper-locations: "classpath*:/mapper/**/*.xml"
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  global-config:
+    db-config:
+      id-type: auto
+      update-strategy: not_null
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+server:
+  port: 10086
+
+knife4j:
+  enable: true
+  openapi:
+    title: 学生管理接口文档
+    description: "学生管理接口文档"
+    email: sse_d@qq.com
+    concat: zhiend
+    url: http://localhost:10086/doc.html
+    version: v1.0.0
+    group:
+      default:
+        group-name: default
+        api-rule: package
+        api-rule-resources:
+          - com.zhiend.photo.controller
