@@ -30,6 +30,10 @@ mybatis-plus.global-config.db-config.table-underline: true
 server:
   port: 10086
 
+# 上传文件存储目录
+upload:
+  dir: src/main/resources/static/photo
+
 knife4j:
   enable: true
   openapi:

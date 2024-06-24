@@ -10,12 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 
- * </p>
- *
- * @author Zhiend
- * @since 2024-06-24
+ * 照片实体类
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -30,13 +25,9 @@ public class Photo implements Serializable {
 
     private Long userId;
 
-    private String originalPhotoPath;
+    private String filename;
 
-    private String processedPhotoPath;
+    private String storagePath;
 
     private LocalDateTime uploadTime;
-
-    private PaymentStatus status;
-
-
 }
