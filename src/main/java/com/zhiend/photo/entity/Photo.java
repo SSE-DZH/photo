@@ -36,7 +36,7 @@ public class Photo implements Serializable {
 
     private LocalDateTime uploadTime;
 
-    private String status;
+    private PaymentStatus status;
 
 
 }

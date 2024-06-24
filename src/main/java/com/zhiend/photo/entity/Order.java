@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("order")
+@TableName("`order`") // 使用反引号包裹表名
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,9 +37,6 @@ public class Order implements Serializable {
 
     private LocalDateTime orderTime;
 
-    private String paymentStatus;
-
-    private String operation;
-
+    private PaymentStatus paymentStatus;
 
 }
