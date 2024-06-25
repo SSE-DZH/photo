@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -27,12 +28,10 @@ public class PhotoController {
     }
 
     @GetMapping("/download/{photoId}")
-    public Result<String> downloadPhoto(@PathVariable Long photoId) {
-        boolean success = photoService.downloadPhoto(photoId);
-        if (success) {
-            return Result.success("Photo downloaded successfully");
-        } else {
-            return Result.error("Photo download failed");
+    public void downloadPhoto(@PathVariable Long photoId, HttpServletResponse response) {
+        boolean success = photoService.downloadPhoto(photoId, response);
+        if (!success) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
