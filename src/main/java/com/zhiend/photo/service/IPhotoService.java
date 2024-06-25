@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IPhotoService extends IService<Photo> {
 
-    boolean uploadPhoto(MultipartFile file, Long userId);
+    Long uploadPhoto(MultipartFile file, Long userId);
 
     boolean downloadPhoto(Long photoId, HttpServletResponse response);
 

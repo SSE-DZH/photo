@@ -24,14 +24,15 @@ import java.util.List;
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements IOrderService {
     @Override
-    public boolean createOrder(OrderDTO orderDTO) {
+    public Long createOrder(OrderDTO orderDTO) {
         Order order = new Order();
         order.setUserId(orderDTO.getUserId());
         order.setPhotoId(orderDTO.getPhotoId());
         order.setAmount(new BigDecimal("0.01")); // 设置价格为0.01
         order.setOrderTime(LocalDateTime.now());
         order.setPaymentStatus(PaymentStatus.UNPAID); // 设置初始状态为未支付
-        return this.save(order);
+        this.save(order);
+        return order.getId();
     }
     @Override
     public List<Order> getOrdersByUser(Long userId) {

@@ -25,13 +25,8 @@ public class OrderController {
     private IOrderService orderService;
 
     @PostMapping("/create")
-    public Result<String> createOrder(@RequestBody OrderDTO orderDTO) {
-        boolean success = orderService.createOrder(orderDTO);
-        if (success) {
-            return Result.success("Order created successfully");
-        } else {
-            return Result.error("Order creation failed");
-        }
+    public Result<Long> createOrder(@RequestBody OrderDTO orderDTO) {
+        return Result.success(orderService.createOrder(orderDTO));
     }
 
     @GetMapping("/{userId}")

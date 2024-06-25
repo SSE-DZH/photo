@@ -18,5 +18,5 @@ public interface IOrderService extends IService<Order> {
 
     List<Order> getOrdersByUser(Long userId);
 
-    boolean createOrder(OrderDTO orderDTO);
+    Long createOrder(OrderDTO orderDTO);
 }

@@ -3,6 +3,7 @@ package com.zhiend.photo.service;
 import com.zhiend.photo.dto.UserRegisterDTO;
 import com.zhiend.photo.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhiend.photo.vo.LoginVO;
 
 /**
  * <p>
@@ -14,6 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
-    boolean register(UserRegisterDTO userRegisterDTO);
-    boolean login(String phone, String password);
+    Long register(UserRegisterDTO userRegisterDTO);
+    LoginVO login(String phone, String password);
 }

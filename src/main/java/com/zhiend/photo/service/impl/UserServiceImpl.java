@@ -6,6 +6,7 @@ import com.zhiend.photo.entity.User;
 import com.zhiend.photo.mapper.UserMapper;
 import com.zhiend.photo.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhiend.photo.vo.LoginVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
     @Override
-    public boolean register(UserRegisterDTO userRegisterDTO) {
+    public Long register(UserRegisterDTO userRegisterDTO) {
+        User existingUser = this.getOne(new QueryWrapper<User>().eq("phone", userRegisterDTO.getPhone()));
+        // 如果手机号已存在，返回 null 表示注册失败
+        if (existingUser != null) {
+            return null;
+        }
+
         User user = new User();
         BeanUtils.copyProperties(userRegisterDTO, user);
-        return this.save(user);
+        this.save(user);
+        return user.getId();
     }
 
     @Override
-    public boolean login(String phone, String password) {
+    public LoginVO login(String phone, String password) {
         User existingUser = this.getOne(new QueryWrapper<User>().eq("phone", phone).eq("password", password));
-        return existingUser != null;
+        if (existingUser == null) {
+            return null;
+        }
+        return new LoginVO(existingUser.getId(), existingUser.getUsername());
     }
 }

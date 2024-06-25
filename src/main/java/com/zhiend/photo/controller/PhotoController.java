@@ -18,13 +18,8 @@ public class PhotoController {
     private IPhotoService photoService;
 
     @PostMapping("/upload")
-    public Result<String> uploadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) {
-        boolean success = photoService.uploadPhoto(file, userId);
-        if (success) {
-            return Result.success("Photo uploaded successfully");
-        } else {
-            return Result.error("Photo upload failed");
-        }
+    public Result<Long> uploadPhoto(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) {
+        return Result.success(photoService.uploadPhoto(file, userId));
     }
 
     @GetMapping("/download/{photoId}")

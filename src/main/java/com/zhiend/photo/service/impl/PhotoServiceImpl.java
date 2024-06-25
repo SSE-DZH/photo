@@ -28,7 +28,7 @@ public class PhotoServiceImpl extends ServiceImpl<PhotoMapper, Photo> implements
 
     @Override
     @Transactional
-    public boolean uploadPhoto(MultipartFile file, Long userId) {
+    public Long uploadPhoto(MultipartFile file, Long userId) {
         try {
             //原始文件名
             String originalFilename = file.getOriginalFilename();
@@ -49,10 +49,10 @@ public class PhotoServiceImpl extends ServiceImpl<PhotoMapper, Photo> implements
             photo.setUploadTime(LocalDateTime.now());
             this.save(photo);
 
-            return true;
+            return photo.getId();
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
