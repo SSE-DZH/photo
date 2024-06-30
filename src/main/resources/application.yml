@@ -10,7 +10,6 @@ alipay:
   alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArOboOcdx5NPhnnMxsolz9IJqU61Nr96vawShs7Oj6CEjrik0SqZ89isA8P/Yh8lA8iqkDuL7lTjqFkP18E/sSgvn9nIgwpyHxwjeKO15h+TvsLZ5071cXI8YFSXMfX0GHCiK49TcChjoSYO7+eLQdwlN/GzEVQdOTQ0kls0v0HwahttKqV9G+EB13N+pymfxle9DTV3YF87iUz+XbQJRY8yGtkaq4+NY3zSDR+moSnMKk7Zex5Rh/WZr/crjHP/EWCMdZ2gmPYHEUgclXY7g2tbxPI4QQQV2fekxW9uCOphTOPPvMuaFbthUM36ULMjLeF0+PhzeVZcX4Eti92pvKQIDAQAB
   notifyUrl: http://localhost:10086/alipay/notify
 
-#  notifyUrl: http://xxx/alipay/notify
 logging:
   level:
     com.zhiend.netflix: info

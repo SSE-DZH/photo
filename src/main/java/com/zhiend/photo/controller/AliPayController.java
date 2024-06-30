@@ -10,6 +10,8 @@ import com.zhiend.photo.config.AliPayConfig;
 import com.zhiend.photo.entity.Order;
 import com.zhiend.photo.entity.PaymentStatus;
 import com.zhiend.photo.service.impl.OrderServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/alipay")
+@Api(tags = "支付宝支付接口")
 public class AliPayController {
  
     // 支付宝沙箱网关地址
@@ -37,7 +40,16 @@ public class AliPayController {
  
     @Resource
     private OrderServiceImpl ordersService;
- 
+
+    /**
+     * 处理支付宝支付请求。
+     * 当用户点击支付按钮后，前端会发送一个GET请求到此接口，接口接收到请求后会生成支付宝支付页面并返回给用户。
+     *
+     * @param orderNo 订单号，用于查询待支付的订单。
+     * @param httpResponse 用于直接向客户端浏览器发送响应。
+     * @throws Exception 如果支付页面生成过程中发生错误。
+     */
+    @ApiOperation(value = "支付宝支付")
     @GetMapping("/pay")  //  /alipay/pay?orderNo=xxx
     public void pay(Long orderNo, HttpServletResponse httpResponse) throws Exception {
         // 查询订单信息
@@ -58,7 +70,6 @@ public class AliPayController {
         bizContent.set("subject", "支付宝支付");   // 支付的名称
         bizContent.set("product_code", "FAST_INSTANT_TRADE_PAY");  // 固定配置
         request.setBizContent(bizContent.toString());
-//        request.setReturnUrl("http://localhost:5173/orders"); // 支付完成后自动跳转到本地页面的路径
         // 执行请求，拿到响应的结果，返回给浏览器
         String form = "";
         try {
@@ -71,7 +82,15 @@ public class AliPayController {
         httpResponse.getWriter().flush();
         httpResponse.getWriter().close();
     }
- 
+
+    /**
+     * 处理支付宝异步通知的接口。
+     * 接收支付宝异步通知请求，验证通知的合法性，并根据通知内容更新订单状态。
+     *
+     * @param request 异步通知请求的HttpServletRequest对象。
+     * @throws Exception 如果验证过程中出现异常。
+     */
+    @ApiOperation(value = "支付宝异步回调")
     @PostMapping("/notify")  // 注意这里必须是POST接口
     public void payNotify(HttpServletRequest request) throws Exception {
         if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
@@ -94,20 +113,10 @@ public class AliPayController {
 //                System.out.println("支付宝交易凭证号: " + params.get("trade_no"));
                 System.out.println("商户订单号: " + params.get("out_trade_no"));
                 System.out.println("交易金额: " + params.get("total_amount"));
-//                System.out.println("买家在支付宝唯一id: " + params.get("buyer_id"));
-//                System.out.println("买家付款时间: " + params.get("gmt_payment"));
-//                System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
- 
- 
-//                String tradeNo = params.get("out_trade_no");
-//                String gmtPayment = params.get("gmt_payment");
-//                String alipayTradeNo = params.get("trade_no");
-                // 更新订单状态为已支付，设置支付信息
+
                 Long tradeNo = Long.parseLong(params.get("out_trade_no"));
                 Order order = ordersService.getUnpaidOrdersByOrderId(tradeNo);
                 order.setPaymentStatus(PaymentStatus.PAID);
-//                order.setPayTime(gmtPayment);
-//                order.setPayNo(alipayTradeNo);
                 ordersService.updateById(order);
             }
         }
