@@ -33,4 +33,3 @@ public class BackPage<T> {
      */
     private List<T> contentList;
 }
-
