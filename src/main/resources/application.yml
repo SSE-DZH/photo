@@ -42,8 +42,8 @@ upload:
 knife4j:
   enable: true
   openapi:
-    title: 学生管理接口文档
-    description: "学生管理接口文档"
+    title: 照相馆接口文档
+    description: "照相馆接口文档"
     email: sse_d@qq.com
     concat: zhiend
     url: http://localhost:10086/doc.html
